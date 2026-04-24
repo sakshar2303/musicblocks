@@ -39,7 +39,8 @@ const mockActivity = {
     turtles: {},
     loading: false,
     prepareExport: jest.fn(),
-    _allClear: jest.fn()
+    _allClear: jest.fn(),
+    _findBlocks: jest.fn()
 };
 
 document.body.innerHTML = `
