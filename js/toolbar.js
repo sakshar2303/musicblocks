@@ -109,6 +109,7 @@ class Toolbar {
                 ["highcontrast", _("High Contrast Mode")],
                 ["mergeWithCurrentIcon", _("Merge with current project")],
                 ["chooseKeyIcon", _("Set Pitch Preview")],
+                ["centerWorkspaceIcon", _("Center workspace")],
                 ["toggleJavaScriptIcon", _("JavaScript Editor")],
                 ["restoreIcon", _("Restore")],
                 ["beginnerMode", _("Switch to beginner mode")],
@@ -735,6 +736,21 @@ class Toolbar {
         const loadIcon = docById("load");
 
         loadIcon.onclick = () => {
+            onclick(this.activity);
+        };
+    }
+
+    /**
+     * Renders the center workspace icon with the provided onclick handler.
+     *
+     * @public
+     * @param {Function} onclick - The onclick handler for the center workspace icon.
+     * @returns {void}
+     */
+    renderCenterWorkspaceIcon(onclick) {
+        const centerIcon = docById("centerWorkspaceIcon");
+
+        centerIcon.onclick = () => {
             onclick(this.activity);
         };
     }

@@ -3914,6 +3914,10 @@ class Activity {
                         pasteEl.style.visibility = "visible";
                         this.update = true;
                         break;
+                    case 48:
+                        event.preventDefault();
+                        this.blocks.centerWorkspace();
+                        break;
                 }
             } else if (event.shiftKey && !disableKeys) {
                 switch (event.keyCode) {
@@ -8290,6 +8294,7 @@ class Activity {
             if (_THIS_IS_MUSIC_BLOCKS_) {
                 this.toolbar.renderChooseKeyIcon(chooseKeyMenu);
             }
+            this.toolbar.renderCenterWorkspaceIcon(this.blocks.centerWorkspace);
             this.toolbar.renderJavaScriptIcon(toggleJSWindow);
             this.toolbar.renderLanguageSelectIcon(this.languageBox);
             this.toolbar.renderWrapIcon();
