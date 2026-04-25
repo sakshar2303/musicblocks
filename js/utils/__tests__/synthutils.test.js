@@ -630,6 +630,12 @@ describe("Utility Functions (logic-only)", () => {
 
             // Act & Assert
             expect(() => startSound(turtle, instrumentName, note)).not.toThrow();
+            // Act
+            startSound(turtle, instrumentName, note);
+
+            // Assert
+            expect(instruments[turtle].flute.triggerAttack).not.toHaveBeenCalled();
+            expect(instruments[turtle].guitar.start).not.toHaveBeenCalled();
         });
 
         test("should handle undefined turtle gracefully", () => {
@@ -704,6 +710,13 @@ describe("Utility Functions (logic-only)", () => {
             const note = "C4";
             // Act & Assert
             expect(() => stopSound(turtle, instrumentName, note)).not.toThrow();
+
+            // Act
+            stopSound(turtle, instrumentName, note);
+
+            // Assert
+            expect(instruments[turtle].flute.triggerRelease).not.toHaveBeenCalled();
+            expect(instruments[turtle].guitar.stop).not.toHaveBeenCalled();
         });
 
         test("should handle invalid turtle gracefully", () => {
