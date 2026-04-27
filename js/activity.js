@@ -569,8 +569,7 @@ class Activity {
          */
         this.setHelpfulSearchDiv = () => {
             if (docById("helpfulSearchDiv")) {
-                docById("helpfulSearchDiv")
-                    .parentNode.removeChild(docById("helpfulSearchDiv"));
+                docById("helpfulSearchDiv").parentNode.removeChild(docById("helpfulSearchDiv"));
             }
             this.helpfulSearchDiv = document.createElement("div");
             this.helpfulSearchDiv.setAttribute("id", "helpfulSearchDiv");
@@ -2256,8 +2255,7 @@ class Activity {
                 // Queue and take first step.
                 if (!this.turtles.running()) {
                     this.logo.runLogoCommands();
-                    docById("stop").style.color =
-                        this.toolbar.stopIconColorWhenPlaying;
+                    docById("stop").style.color = this.toolbar.stopIconColorWhenPlaying;
                 }
                 this.logo.step();
             } else {
@@ -2906,23 +2904,13 @@ class Activity {
 
             // Remove previous wheel event listener if it exists
             if (this._wheelHandler) {
-                this.removeEventListener(
-                    docById("myCanvas"),
-                    "wheel",
-                    this._wheelHandler,
-                    false
-                );
+                this.removeEventListener(docById("myCanvas"), "wheel", this._wheelHandler, false);
             }
 
             // Store the handler reference for future cleanup
             this._wheelHandler = __wheelHandler;
 
-            this.addEventListener(
-                docById("myCanvas"),
-                "wheel",
-                __wheelHandler,
-                false
-            );
+            this.addEventListener(docById("myCanvas"), "wheel", __wheelHandler, false);
 
             /**
              * Handles stage mouse up event.
@@ -3445,15 +3433,13 @@ class Activity {
                 const closeListener = e => {
                     if (
                         docById("search").style.visibility === "visible" &&
-                        (e.target === docById("search") ||
-                            docById("search").contains(e.target))
+                        (e.target === docById("search") || docById("search").contains(e.target))
                     ) {
                         //do nothing when clicked in the input field
                     } else if (
                         docById("ui-id-1") &&
                         docById("ui-id-1").style.display === "block" &&
-                        (e.target === docById("ui-id-1") ||
-                            docById("ui-id-1").contains(e.target))
+                        (e.target === docById("ui-id-1") || docById("ui-id-1").contains(e.target))
                     ) {
                         //do nothing when clicked on the menu
                     } else if (

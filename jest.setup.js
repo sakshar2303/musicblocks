@@ -1,4 +1,6 @@
 // Mock HTMLCanvasElement.getContext to suppress jsdom warnings
+global.docById = id => document.getElementById(id);
+global._ = text => text; // Simple mock for translation helper
 
 const mockContext = {
     clearRect: jest.fn(),
