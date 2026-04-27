@@ -2177,7 +2177,7 @@ class Blocks {
                         }
                     } else if (myBlock.protoblock.style === "argclamparg") {
                         /** We don't need to do anything special with argclamparg blocks. */
-                        /** console.debug("skipping argclamparg"); */
+                        /** debugLog("skipping argclamparg"); */
                     } else if (!this.blockList[thisBlock].isArgFlowClampBlock()) {
                         bottom = this.findBottomBlock(thisBlock);
                         this.blockList[connection].connections[0] = bottom;
@@ -2185,7 +2185,7 @@ class Blocks {
                             this.blockList[bottom].connections.length - 1
                         ] = connection;
                     } else {
-                        console.debug("HOW DID WE GET HERE?");
+                        debugLog("HOW DID WE GET HERE?");
                     }
                 }
 
@@ -2364,9 +2364,8 @@ class Blocks {
                 /** Extra check for malformed data. */
                 expandableLoopCounter += 1;
                 if (expandableLoopCounter > 2 * this.blockList.length) {
-                    console.debug("Infinite loop checking for expandables?");
-
-                    console.debug(this.blockList);
+                    debugLog("Infinite loop checking for expandables?");
+                    debugLog(this.blockList);
                     break;
                 }
 
@@ -2480,7 +2479,7 @@ class Blocks {
                 if (checkBoundsCount % 25 === 0) {
                     const now = performance.now();
                     const cps = (25 / (now - lastCheckBoundsReport)) * 1000;
-                    console.log(
+                    debugLog(
                         `checkBounds | Avg: ${(totalCheckBoundsTime / checkBoundsCount).toFixed(
                             2
                         )}ms | Max: ${maxCheckBoundsTime.toFixed(2)}ms | Rate: ${cps.toFixed(
@@ -2829,7 +2828,7 @@ class Blocks {
             if (myBlock.loadComplete) {
                 myBlock.container.updateCache();
             } else {
-                console.debug("Load not yet complete for (" + blk + ") " + myBlock.name);
+                debugLog("Load not yet complete for (" + blk + ") " + myBlock.name);
             }
         };
 
@@ -2860,7 +2859,7 @@ class Blocks {
                 myBlock.connections[0] != null &&
                 myBlock.connections[0] === last(myBlock.connections)
             ) {
-                console.debug(
+                debugLog(
                     "WARNING: CORRUPTED BLOCK DATA. Block " +
                         myBlock.name +
                         " (" +
@@ -2879,9 +2878,9 @@ class Blocks {
                 topBlockLoop += 1;
                 if (topBlockLoop > 2 * this.blockList.length) {
                     /** Could happen if the block data is malformed. */
-                    console.debug("infinite loop finding topBlock?");
+                    debugLog("infinite loop finding topBlock?");
                     if (myBlock.garbage) {
-                        console.debug(myBlock.blockIndex + " " + myBlock.name);
+                        debugLog(myBlock.blockIndex + " " + myBlock.name);
                     }
                     break;
                 }

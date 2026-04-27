@@ -1837,7 +1837,7 @@ class Logo {
                 }
             }
         } else {
-            // console.debug("Ignoring block on overlapped start.");
+            // debugLog("Ignoring block on overlapped start.");
         }
 
         if (logo.statusMatrix && logo.statusMatrix.isOpen && !logo.inStatusMatrix) {
@@ -1861,7 +1861,7 @@ class Logo {
                 tur.parentFlowQueue.push(blk);
                 tur.queue.push(queueBlock);
             } else {
-                // console.debug("cannot find queue for turtle " + turtle);
+                // debugLog("cannot find queue for turtle " + turtle);
             }
         }
 
@@ -1926,7 +1926,7 @@ class Logo {
                     // the unhighlighting of the parent block to the
                     // flow.
                     if (tur.unhighlightQueue === undefined) {
-                        // console.debug("cannot find highlight queue for turtle " + turtle);
+                        // debugLog("cannot find highlight queue for turtle " + turtle);
                     } else if (
                         tur.parentFlowQueue.length > 0 &&
                         tur.queue.length > 0 &&
@@ -2018,7 +2018,7 @@ class Logo {
                                 tur.butNotThese[b].indexOf(i) === -1
                             ) {
                                 if (tur.singer.runningFromEvent) {
-                                    // console.log("RUNNING FROM EVENT");
+                                    // debugLog("RUNNING FROM EVENT");
                                 } else {
                                     logo.activity.stage.dispatchEvent(tur.endOfClampSignals[b][i]);
                                 }
@@ -2091,14 +2091,14 @@ class Logo {
                             document.body.style.cursor = "default";
                         }
                     } else if (logo.runningMxml) {
-                        // console.log("saving mxml output");
+                        // debugLog("saving mxml output");
                         logo.activity.save.afterSaveMxml();
                         logo.runningMxml = false;
                     } else if (logo.runningMIDI) {
                         logo.activity.save.afterSaveMIDI();
                         logo.runningMIDI = false;
                     } else if (tur.singer.suppressOutput) {
-                        // console.debug("finishing compiling");
+                        // debugLog("finishing compiling");
                         if (!logo.recording) {
                             logo.activity.errorMsg(_("Playback is ready."));
                         }
@@ -2137,7 +2137,7 @@ class Logo {
                     //         tur.singer.suppressOutput
                     // );
                     logo._lastNoteTimeout = logo._timerManager.setTimeout(() => {
-                        // console.debug("LAST NOTE PLAYED");
+                        // debugLog("LAST NOTE PLAYED");
                         logo._lastNoteTimeout = null;
                         tur.singer.runningFromEvent = false;
                         if (tur.singer.suppressOutput && logo.recording) {

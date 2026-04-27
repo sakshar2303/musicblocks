@@ -1,5 +1,7 @@
 // Mock HTMLCanvasElement.getContext to suppress jsdom warnings
 
+global.debugLog = jest.fn();
+
 const mockContext = {
     clearRect: jest.fn(),
     fillRect: jest.fn(),
