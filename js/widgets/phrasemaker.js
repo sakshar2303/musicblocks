@@ -2035,7 +2035,7 @@ class PhraseMaker {
                 this._pitchWheel.navigateWheel(
                     noteLabels.indexOf(
                         this._deps.docBySelector('.labelcol[alt="' + index + '__drumblocks"]')
-                            .innerText
+                            .textContent
                     )
                 );
             } else {
@@ -4412,7 +4412,7 @@ class PhraseMaker {
     _clear() {
         // Reset the `_lyrics` array
         this._lyrics = Array(this._lyrics.length).fill("");
-        const lyricsRow = document.getElementById("lyricRow");
+        const lyricsRow = docById("lyricRow");
         if (lyricsRow) {
             const inputFields = lyricsRow.querySelectorAll("input[type='text']");
             inputFields.forEach((inputField, index) => {

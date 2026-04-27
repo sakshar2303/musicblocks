@@ -448,23 +448,23 @@ class Activity {
             window.scroll(0, 0);
 
             document.title = TITLESTRING;
-            this.canvas = document.getElementById("myCanvas");
+            this.canvas = docById("myCanvas");
 
             // Set up a file chooser for the doOpen function.
-            this.fileChooser = document.getElementById("myOpenFile");
+            this.fileChooser = docById("myOpenFile");
             // Set up a file chooser for the doOpenPlugin function.
-            this.pluginChooser = document.getElementById("myOpenPlugin");
+            this.pluginChooser = docById("myOpenPlugin");
             // The file chooser for all files
-            this.allFilesChooser = document.getElementById("myOpenAll");
-            this.auxToolbar = document.getElementById("aux-toolbar");
+            this.allFilesChooser = docById("myOpenAll");
+            this.auxToolbar = docById("aux-toolbar");
             // Error message containers
-            this.errorText = document.getElementById("errorText");
-            this.errorTextContent = document.getElementById("errorTextContent");
+            this.errorText = docById("errorText");
+            this.errorTextContent = docById("errorTextContent");
             // Hide Arrow on hiding error message
             this.addEventListener(this.errorText, "click", this._hideArrows);
             // Show and populate the printText div.
-            this.printText = document.getElementById("printText");
-            this.printTextContent = document.getElementById("printTextContent");
+            this.printText = docById("printText");
+            this.printTextContent = docById("printTextContent");
 
             // Are we running off of a server?
             this.server = true;
@@ -497,12 +497,12 @@ class Activity {
             this.collapseBlocksContainer = null;
 
             // --- DOM reads (batched to avoid forced synchronous layout) ---
-            this.searchWidget = document.getElementById("search");
-            this.progressBar = document.getElementById("myProgress");
-            const pasteEl = document.getElementById("paste");
+            this.searchWidget = docById("search");
+            this.progressBar = docById("myProgress");
+            const pasteEl = docById("paste");
             new createjs.DOMElement(pasteEl);
             this.paste = pasteEl;
-            this.toolbarHeight = document.getElementById("toolbars").offsetHeight;
+            this.toolbarHeight = docById("toolbars").offsetHeight;
 
             // --- DOM writes (after all reads complete) ---
             this.searchWidget.style.visibility = "hidden";
@@ -568,10 +568,9 @@ class Activity {
          * creates helpfulSearchDiv for search
          */
         this.setHelpfulSearchDiv = () => {
-            if (document.getElementById("helpfulSearchDiv")) {
-                document
-                    .getElementById("helpfulSearchDiv")
-                    .parentNode.removeChild(document.getElementById("helpfulSearchDiv"));
+            if (docById("helpfulSearchDiv")) {
+                docById("helpfulSearchDiv")
+                    .parentNode.removeChild(docById("helpfulSearchDiv"));
             }
             this.helpfulSearchDiv = document.createElement("div");
             this.helpfulSearchDiv.setAttribute("id", "helpfulSearchDiv");
@@ -594,7 +593,7 @@ class Activity {
             this.helpfulSearchDiv.appendChild(closeButtonDiv);
 
             // Add event listener to remove the search div from the DOM
-            const modeButton = document.getElementById("begIconText");
+            const modeButton = docById("begIconText");
             this.addEventListener(closeButton, "click", this._hideHelpfulSearchWidget);
             this.addEventListener(modeButton, "click", this._hideHelpfulSearchWidget);
 
@@ -605,11 +604,11 @@ class Activity {
          * displays helpfulSearchDiv on canvas
          */
         this._displayHelpfulSearchDiv = () => {
-            if (!document.getElementById("helpfulSearchDiv")) {
+            if (!docById("helpfulSearchDiv")) {
                 this.setHelpfulSearchDiv(); // Re-create and append the div if it's not found
             }
             // Cache DOM element reference for performance
-            const helpfulWheelDiv = document.getElementById("helpfulWheelDiv");
+            const helpfulWheelDiv = docById("helpfulWheelDiv");
             this.helpfulSearchDiv.style.left =
                 helpfulWheelDiv.offsetLeft + 80 * this.getStageScale() + "px";
             this.helpfulSearchDiv.style.top =
@@ -636,7 +635,7 @@ class Activity {
 
         this._hideHelpfulSearchWidget = e => {
             // Cache DOM element reference for performance
-            const helpfulWheelDiv = document.getElementById("helpfulWheelDiv");
+            const helpfulWheelDiv = docById("helpfulWheelDiv");
             if (helpfulWheelDiv.style.display !== "none") {
                 helpfulWheelDiv.style.display = "none";
             }
@@ -677,7 +676,7 @@ class Activity {
          */
         this._displayHelpfulWheel = event => {
             // Cache DOM element reference for performance (7 lookups reduced to 1)
-            const helpfulWheelDiv = document.getElementById("helpfulWheelDiv");
+            const helpfulWheelDiv = docById("helpfulWheelDiv");
             helpfulWheelDiv.style.position = "absolute";
 
             const x = event.clientX;
@@ -816,7 +815,7 @@ class Activity {
         const findBlocks = activity => {
             activity._findBlocks();
             // Cache DOM element reference for performance
-            const helpfulWheelDiv = document.getElementById("helpfulWheelDiv");
+            const helpfulWheelDiv = docById("helpfulWheelDiv");
             if (helpfulWheelDiv.style.display !== "none") {
                 helpfulWheelDiv.style.display = "none";
                 activity.__tick();
@@ -1545,7 +1544,7 @@ class Activity {
         };
 
         const midiImportBlocks = midi => {
-            if (document.getElementById("import-midi")) return;
+            if (docById("import-midi")) return;
 
             const modal = document.createElement("div");
             modal.classList.add("modalBox");
@@ -1612,7 +1611,7 @@ class Activity {
          * Clears "canvas"
          */
         const renderClearConfirmation = clearCanvasAction => {
-            if (document.getElementById("clear-confirm")) return;
+            if (docById("clear-confirm")) return;
             // Create a custom modal for confirmation
             const modal = document.createElement("div");
             modal.classList.add("modalBox");
@@ -1675,7 +1674,7 @@ class Activity {
                 // Stop all GIF animations and clear overlay canvas (Issue #4907)
                 if (this.gifAnimator) {
                     this.gifAnimator.stopAll();
-                    const overlayCanvas = document.getElementById("overlayCanvas");
+                    const overlayCanvas = docById("overlayCanvas");
                     if (overlayCanvas) {
                         const ctx = overlayCanvas.getContext("2d");
                         ctx.clearRect(0, 0, overlayCanvas.width, overlayCanvas.height);
@@ -1710,13 +1709,13 @@ class Activity {
                 this.blocksContainer.x = 0;
                 this.blocksContainer.y = 0;
 
-                const table = document.getElementById("myTable");
+                const table = docById("myTable");
                 if (table !== null) {
                     table.remove();
                 }
 
                 // Cache DOM element reference for performance
-                const helpfulWheelDiv = document.getElementById("helpfulWheelDiv");
+                const helpfulWheelDiv = docById("helpfulWheelDiv");
                 if (helpfulWheelDiv.style.display !== "none") {
                     helpfulWheelDiv.style.display = "none";
                     this.__tick();
@@ -1782,7 +1781,7 @@ class Activity {
                 }
 
                 this.logo.runLogoCommands(null, env);
-                const stopBtn = document.getElementById("stop");
+                const stopBtn = docById("stop");
                 if (stopBtn) {
                     stopBtn.style.display = "inline-block";
                     stopBtn.style.color = window.platformColor.stopIconcolor;
@@ -1793,7 +1792,7 @@ class Activity {
                     this.logo.step();
                 } else {
                     // Stop and restart.
-                    const stopBtn = document.getElementById("stop");
+                    const stopBtn = docById("stop");
                     if (stopBtn) {
                         stopBtn.style.color = "white";
                     }
@@ -1801,7 +1800,7 @@ class Activity {
 
                     const that = this;
                     setTimeout(() => {
-                        const stopBtnDelay = document.getElementById("stop");
+                        const stopBtnDelay = docById("stop");
                         if (stopBtnDelay) {
                             stopBtnDelay.style.color = window.platformColor.stopIconcolor;
                         }
@@ -1841,8 +1840,8 @@ class Activity {
          */
         this._doRecordButton = () => {
             const that = this;
-            const start = document.getElementById("record"),
-                recInside = document.getElementById("rec_inside");
+            const start = docById("record"),
+                recInside = docById("rec_inside");
             let mediaRecorder;
             const clickEvent = new Event("click");
             let flag = 0;
@@ -1871,13 +1870,13 @@ class Activity {
 
             async function recordCanvasOnly() {
                 flag = 1;
-                const canvas = document.getElementById("myCanvas");
+                const canvas = docById("myCanvas");
                 if (!canvas) {
                     throw new Error("Canvas element not found");
                 }
 
                 // Get the toolbar height to exclude from recording
-                const toolbar = document.getElementById("toolbars");
+                const toolbar = docById("toolbars");
                 const toolbarHeight = toolbar ? toolbar.offsetHeight : 0;
 
                 // Get canvas dimensions
@@ -2257,7 +2256,7 @@ class Activity {
                 // Queue and take first step.
                 if (!this.turtles.running()) {
                     this.logo.runLogoCommands();
-                    document.getElementById("stop").style.color =
+                    docById("stop").style.color =
                         this.toolbar.stopIconColorWhenPlaying;
                 }
                 this.logo.step();
@@ -2267,7 +2266,7 @@ class Activity {
                 );
                 if (noBlocks) {
                     this.logo.doStopTurtles();
-                    document.getElementById("stop").style.color = "white";
+                    docById("stop").style.color = "white";
                     return;
                 }
                 this.logo.turtleDelay = this.TURTLESTEP;
@@ -2301,7 +2300,7 @@ class Activity {
             }
 
             this.logo.doStopTurtles();
-            document.getElementById("stop").style.display = "none";
+            docById("stop").style.display = "none";
 
             const widgetTitle = document.getElementsByClassName("wftTitle");
             for (let i = 0; i < widgetTitle.length; i++) {
@@ -2359,7 +2358,7 @@ class Activity {
             activity._setScroller();
             activity._setupBlocksContainerEvents();
             // Cache DOM element reference for performance
-            const helpfulWheelDiv = document.getElementById("helpfulWheelDiv");
+            const helpfulWheelDiv = docById("helpfulWheelDiv");
             if (helpfulWheelDiv.style.display !== "none") {
                 helpfulWheelDiv.style.display = "none";
             }
@@ -2373,8 +2372,8 @@ class Activity {
         this._setScroller = () => {
             this.blocks.activeBlock = null;
             this.scrollBlockContainer = !this.scrollBlockContainer;
-            const enableHorizScrollIcon = document.getElementById("enableHorizScrollIcon");
-            const disableHorizScrollIcon = document.getElementById("disableHorizScrollIcon");
+            const enableHorizScrollIcon = docById("enableHorizScrollIcon");
+            const disableHorizScrollIcon = docById("disableHorizScrollIcon");
             if (this.scrollBlockContainer && !this.beginnerMode) {
                 enableHorizScrollIcon.style.display = "none";
                 disableHorizScrollIcon.style.display = "block";
@@ -2415,7 +2414,7 @@ class Activity {
                 ]
             };
 
-            document.getElementById("load-container").style.display = "block";
+            docById("load-container").style.display = "block";
 
             let counter = 0;
 
@@ -2424,7 +2423,7 @@ class Activity {
                     messages.load_messages[
                         Math.floor(Math.random() * messages.load_messages.length)
                     ];
-                document.getElementById("messageText").textContent = randomLoadMessage + "...";
+                docById("messageText").textContent = randomLoadMessage + "...";
                 counter++;
                 if (counter >= messages.load_messages.length) {
                     counter = 0;
@@ -2443,7 +2442,7 @@ class Activity {
                 clearInterval(this.loadAnimationIntervalId);
                 this.loadAnimationIntervalId = null;
             }
-            const loadContainer = document.getElementById("load-container");
+            const loadContainer = docById("load-container");
             if (loadContainer) {
                 loadContainer.style.display = "none";
             }
@@ -2456,7 +2455,7 @@ class Activity {
         const doLargerBlocks = async activity => {
             await activity._doLargerBlocks();
             // Cache DOM element reference for performance
-            const helpfulWheelDiv = document.getElementById("helpfulWheelDiv");
+            const helpfulWheelDiv = docById("helpfulWheelDiv");
             if (helpfulWheelDiv.style.display !== "none") {
                 helpfulWheelDiv.style.display = "none";
                 activity.__tick();
@@ -2493,7 +2492,7 @@ class Activity {
         const doSmallerBlocks = async activity => {
             await activity._doSmallerBlocks();
             // Cache DOM element reference for performance
-            const helpfulWheelDiv = document.getElementById("helpfulWheelDiv");
+            const helpfulWheelDiv = docById("helpfulWheelDiv");
             if (helpfulWheelDiv.style.display !== "none") {
                 helpfulWheelDiv.style.display = "none";
                 activity.__tick();
@@ -2742,7 +2741,7 @@ class Activity {
                     "textLabel",
                     "numberLabel"
                 ].forEach(id => {
-                    const elem = document.getElementById(id);
+                    const elem = docById(id);
                     if (elem) elem.style.display = "none";
                 });
             };
@@ -2804,7 +2803,7 @@ class Activity {
 
             // Assuming you have defined 'that' and 'closeAnyOpenMenusAndLabels' elsewhere in your code
 
-            const myCanvas = document.getElementById("myCanvas");
+            const myCanvas = docById("myCanvas");
             const initialTouches = [
                 [null, null],
                 [null, null]
@@ -2908,7 +2907,7 @@ class Activity {
             // Remove previous wheel event listener if it exists
             if (this._wheelHandler) {
                 this.removeEventListener(
-                    document.getElementById("myCanvas"),
+                    docById("myCanvas"),
                     "wheel",
                     this._wheelHandler,
                     false
@@ -2919,7 +2918,7 @@ class Activity {
             this._wheelHandler = __wheelHandler;
 
             this.addEventListener(
-                document.getElementById("myCanvas"),
+                docById("myCanvas"),
                 "wheel",
                 __wheelHandler,
                 false
@@ -3445,16 +3444,16 @@ class Activity {
                 const that = this;
                 const closeListener = e => {
                     if (
-                        document.getElementById("search").style.visibility === "visible" &&
-                        (e.target === document.getElementById("search") ||
-                            document.getElementById("search").contains(e.target))
+                        docById("search").style.visibility === "visible" &&
+                        (e.target === docById("search") ||
+                            docById("search").contains(e.target))
                     ) {
                         //do nothing when clicked in the input field
                     } else if (
-                        document.getElementById("ui-id-1") &&
-                        document.getElementById("ui-id-1").style.display === "block" &&
-                        (e.target === document.getElementById("ui-id-1") ||
-                            document.getElementById("ui-id-1").contains(e.target))
+                        docById("ui-id-1") &&
+                        docById("ui-id-1").style.display === "block" &&
+                        (e.target === docById("ui-id-1") ||
+                            docById("ui-id-1").contains(e.target))
                     ) {
                         //do nothing when clicked on the menu
                     } else if (
@@ -3744,7 +3743,7 @@ class Activity {
             if (!this.keyboardEnableFlag) {
                 return;
             }
-            if (document.getElementById("labelDiv").classList.contains("hasKeyboard")) {
+            if (docById("labelDiv").classList.contains("hasKeyboard")) {
                 return;
             }
             // Skip hotkeys when value bar is visible (prevents accidental block creation)
@@ -3754,32 +3753,32 @@ class Activity {
 
             if (this.keyboardEnableFlag) {
                 if (
-                    document.getElementById("BPMInput") !== null &&
-                    document.getElementById("BPMInput").classList.contains("hasKeyboard")
+                    docById("BPMInput") !== null &&
+                    docById("BPMInput").classList.contains("hasKeyboard")
                 ) {
                     return;
                 }
                 if (
-                    document.getElementById("musicratio1") !== null &&
-                    document.getElementById("musicratio1").classList.contains("hasKeyboard")
+                    docById("musicratio1") !== null &&
+                    docById("musicratio1").classList.contains("hasKeyboard")
                 ) {
                     return;
                 }
                 if (
-                    document.getElementById("musicratio2") !== null &&
-                    document.getElementById("musicratio2").classList.contains("hasKeyboard")
+                    docById("musicratio2") !== null &&
+                    docById("musicratio2").classList.contains("hasKeyboard")
                 ) {
                     return;
                 }
                 if (
-                    document.getElementById("dissectNumber") !== null &&
-                    document.getElementById("dissectNumber").classList.contains("hasKeyboard")
+                    docById("dissectNumber") !== null &&
+                    docById("dissectNumber").classList.contains("hasKeyboard")
                 ) {
                     return;
                 }
                 if (
-                    document.getElementById("timbreName") !== null &&
-                    document.getElementById("timbreName").classList.contains("hasKeyboard")
+                    docById("timbreName") !== null &&
+                    docById("timbreName").classList.contains("hasKeyboard")
                 ) {
                     return;
                 }
@@ -3807,12 +3806,12 @@ class Activity {
             const KEYCODE_DOWN = 40;
             const DEL = 46;
             const V = 86;
-            const lilypondModal = document.getElementById("lilypondModal");
-            const samplerPrompt = document.getElementById("samplerPrompt");
-            const planetIframe = document.getElementById("planet-iframe");
+            const lilypondModal = docById("lilypondModal");
+            const samplerPrompt = docById("samplerPrompt");
+            const planetIframe = docById("planet-iframe");
             const pasteEl = this.paste;
-            const wheelDiv = document.getElementById("wheelDiv");
-            const stopbtn = document.getElementById("stop");
+            const wheelDiv = docById("wheelDiv");
+            const stopbtn = docById("stop");
             const disableKeys =
                 lilypondModal.style.display === "block" ||
                 this.searchWidget.style.visibility === "visible" ||
@@ -4099,7 +4098,7 @@ class Activity {
                                 this._doHardStopButton();
                             } else if (!disableKeys && !hasOpenWidget) {
                                 event.preventDefault();
-                                const stopbtn = document.getElementById("stop");
+                                const stopbtn = docById("stop");
                                 if (stopbtn) {
                                     stopbtn.style.color = platformColor.stopIconcolor;
                                 }
@@ -4178,7 +4177,7 @@ class Activity {
                 return;
             }
 
-            if (document.getElementById("labelDiv").classList.contains("hasKeyboard")) {
+            if (docById("labelDiv").classList.contains("hasKeyboard")) {
                 return;
             }
 
@@ -4330,7 +4329,7 @@ class Activity {
                 this.turtles.getTurtle(turtle).painter.doClear(false, false, true);
             }
 
-            const artcanvas = document.getElementById("overlayCanvas");
+            const artcanvas = docById("overlayCanvas");
             // Workaround for #795.5
             if (mobileSize) {
                 artcanvas.width = w * 2;
@@ -4343,10 +4342,10 @@ class Activity {
             this.blocks.checkBounds();
         };
 
-        const container = document.getElementById("canvasContainer");
-        const canvas = document.getElementById("myCanvas");
-        const overCanvas = document.getElementById("canvas");
-        const canvasHolder = document.getElementById("canvasHolder");
+        const container = docById("canvasContainer");
+        const canvas = docById("myCanvas");
+        const overCanvas = docById("canvas");
+        const canvasHolder = docById("canvasHolder");
         const defaultWidth = 1600;
         const defaultHeight = 900;
 
@@ -4384,7 +4383,7 @@ class Activity {
                 canvasHolder.width = canvas.width;
                 canvasHolder.height = canvas.height;
             }
-            const hideContents = document.getElementById("hideContents");
+            const hideContents = docById("hideContents");
             if (hideContents) {
                 hideContents.click();
             }
@@ -4436,7 +4435,7 @@ class Activity {
         const resizeCanvas_ = () => {
             try {
                 that._onResize(false);
-                const hideContents = document.getElementById("hideContents");
+                const hideContents = docById("hideContents");
                 if (hideContents) {
                     hideContents.click();
                 }
@@ -4469,7 +4468,7 @@ class Activity {
             }
 
             // Cache DOM element reference for performance
-            const helpfulWheelDiv = document.getElementById("helpfulWheelDiv");
+            const helpfulWheelDiv = docById("helpfulWheelDiv");
             if (helpfulWheelDiv.style.display !== "none") {
                 helpfulWheelDiv.style.display = "none";
                 activity.__tick();
@@ -4489,7 +4488,7 @@ class Activity {
             activity.textMsg(_("Item restored from the trash."), 3000);
 
             // Cache DOM element reference for performance
-            const helpfulWheelDiv = document.getElementById("helpfulWheelDiv");
+            const helpfulWheelDiv = docById("helpfulWheelDiv");
             if (helpfulWheelDiv.style.display !== "none") {
                 helpfulWheelDiv.style.display = "none";
                 activity.__tick();
@@ -4597,7 +4596,7 @@ class Activity {
         };
 
         // Add event listener for trash icon click
-        document.getElementById("restoreIcon").addEventListener("click", () => {
+        docById("restoreIcon").addEventListener("click", () => {
             this._renderTrashView();
         });
 
@@ -4635,7 +4634,7 @@ class Activity {
             ) {
                 return;
             }
-            const trashList = document.getElementById("trashList");
+            const trashList = docById("trashList");
             const trashView = document.createElement("div");
             trashView.id = "trashView";
             trashView.classList.add("trash-view");
@@ -4703,7 +4702,7 @@ class Activity {
             // Attach outside-click listener once, after all items are rendered
             handleClickOutsideTrashView(trashView);
 
-            const existingView = document.getElementById("trashView");
+            const existingView = docById("trashView");
             if (existingView) {
                 trashList.replaceChild(trashView, existingView);
             } else {
@@ -4734,7 +4733,7 @@ class Activity {
             // function to increase or decrease the "top" property of the top-right corner buttons
 
             const topRightButtons = document.querySelectorAll("#buttoncontainerTOP .tooltipped");
-            const gridElement = document.getElementById("Grid");
+            const gridElement = docById("Grid");
             const btnY = gridElement ? gridElement.getBoundingClientRect().top : 70 + LEADING + 6;
 
             this.changeTopButtonsPosition = value => {
@@ -4893,7 +4892,7 @@ class Activity {
         const changeBlockVisibility = activity => {
             activity._changeBlockVisibility();
             // Cache DOM element reference for performance
-            const helpfulWheelDiv = document.getElementById("helpfulWheelDiv");
+            const helpfulWheelDiv = docById("helpfulWheelDiv");
             if (helpfulWheelDiv.style.display !== "none") {
                 helpfulWheelDiv.style.display = "none";
                 activity.__tick();
@@ -4929,7 +4928,7 @@ class Activity {
         const toggleCollapsibleStacks = activity => {
             activity._toggleCollapsibleStacks();
             // Cache DOM element reference for performance
-            const helpfulWheelDiv = document.getElementById("helpfulWheelDiv");
+            const helpfulWheelDiv = docById("helpfulWheelDiv");
             if (helpfulWheelDiv.style.display !== "none") {
                 helpfulWheelDiv.style.display = "none";
                 activity.__tick();
@@ -4953,15 +4952,15 @@ class Activity {
                 this.showBlocksAfterRun = false;
             }
 
-            const stopIcon = document.getElementById("stop");
+            const stopIcon = docById("stop");
             if (stopIcon) {
                 stopIcon.style.color = "white";
                 stopIcon.style.display = "none";
             }
 
-            const saveBtn = document.getElementById("saveButton");
-            const saveBtnAdv = document.getElementById("saveButtonAdvanced");
-            const recordBtn = document.getElementById("record");
+            const saveBtn = docById("saveButton");
+            const saveBtnAdv = docById("saveButtonAdvanced");
+            const recordBtn = docById("record");
 
             if (saveBtn) {
                 saveBtn.disabled = false;
@@ -5047,14 +5046,14 @@ class Activity {
         };
 
         this._doOpenSamples = () => {
-            if (document.getElementById("palette").style.display !== "none")
-                document.getElementById("palette").style.display = "none";
+            if (docById("palette").style.display !== "none")
+                docById("palette").style.display = "none";
             this.toolbar.closeAuxToolbar(showHideAuxMenu);
             this.planet.openPlanet();
-            if (document.getElementById("buttoncontainerBOTTOM").style.display !== "none")
-                document.getElementById("buttoncontainerBOTTOM").style.display = "none";
-            if (document.getElementById("buttoncontainerTOP").style.display !== "none")
-                document.getElementById("buttoncontainerTOP").style.display = "none";
+            if (docById("buttoncontainerBOTTOM").style.display !== "none")
+                docById("buttoncontainerBOTTOM").style.display = "none";
+            if (docById("buttoncontainerTOP").style.display !== "none")
+                docById("buttoncontainerTOP").style.display = "none";
         };
 
         /*
@@ -5070,7 +5069,7 @@ class Activity {
         const chooseKeyMenu = that => {
             piemenuKey(that);
             // Cache DOM element reference for performance
-            const helpfulWheelDiv = document.getElementById("helpfulWheelDiv");
+            const helpfulWheelDiv = docById("helpfulWheelDiv");
             if (helpfulWheelDiv.style.display !== "none") {
                 helpfulWheelDiv.style.display = "none";
             }
@@ -5931,34 +5930,34 @@ class Activity {
          */
         this.showContents = () => {
             clearInterval(window.intervalId);
-            document.getElementById("loadingText").textContent = _("Loading Complete!");
+            docById("loadingText").textContent = _("Loading Complete!");
 
             setTimeout(() => {
-                const loadingText = document.getElementById("loadingText");
+                const loadingText = docById("loadingText");
                 if (loadingText) loadingText.textContent = null;
 
-                const loadingImageContainer = document.getElementById("loading-image-container");
+                const loadingImageContainer = docById("loading-image-container");
                 if (loadingImageContainer) loadingImageContainer.style.display = "none";
 
                 // Try hiding load-container instead if it exists
-                const loadContainer = document.getElementById("load-container");
+                const loadContainer = docById("load-container");
                 if (loadContainer) loadContainer.style.display = "none";
 
-                const bottomRightLogo = document.getElementById("bottom-right-logo");
+                const bottomRightLogo = docById("bottom-right-logo");
                 if (bottomRightLogo) bottomRightLogo.style.display = "none";
 
-                const palette = document.getElementById("palette");
+                const palette = docById("palette");
                 if (palette) palette.style.display = "block";
 
-                // document.getElementById('canvas').style.display = 'none';
+                // docById('canvas').style.display = 'none';
 
-                const hideContents = document.getElementById("hideContents");
+                const hideContents = docById("hideContents");
                 if (hideContents) hideContents.style.display = "block";
 
-                const btnBottom = document.getElementById("buttoncontainerBOTTOM");
+                const btnBottom = docById("buttoncontainerBOTTOM");
                 if (btnBottom) btnBottom.style.display = "block";
 
-                const btnTop = document.getElementById("buttoncontainerTOP");
+                const btnTop = docById("buttoncontainerTOP");
                 if (btnTop) btnTop.style.display = "block";
             }, 500);
         };
@@ -6999,7 +6998,7 @@ class Activity {
             let x = window.innerWidth - 4 * btnSize - 27.5;
             const y = window.innerHeight - 57.5;
 
-            const removeButtonContainer = document.getElementById("buttoncontainerBOTTOM");
+            const removeButtonContainer = docById("buttoncontainerBOTTOM");
             if (removeButtonContainer) {
                 removeButtonContainer.parentNode.removeChild(removeButtonContainer);
             }
@@ -7243,7 +7242,7 @@ class Activity {
                     that.doHelpfulSearch();
                 }, 500);
 
-                document.getElementById("helpfulWheelDiv").style.display = "none";
+                docById("helpfulWheelDiv").style.display = "none";
             }
         };
 
@@ -7354,7 +7353,7 @@ class Activity {
 
             this.helpfulSearchWidget.value = "";
             // Hide search div after search is complete.
-            document.getElementById("helpfulSearchDiv").style.display = "none";
+            docById("helpfulSearchDiv").style.display = "none";
             this.update = true;
         };
 
@@ -7718,7 +7717,7 @@ class Activity {
                 "style",
                 "position: absolute; right:" + rightPos + "px;  top: " + y + "px;"
             );
-            document.getElementById("buttoncontainerBOTTOM").appendChild(container);
+            docById("buttoncontainerBOTTOM").appendChild(container);
             return container;
         };
 
@@ -7741,7 +7740,7 @@ class Activity {
          * Handles pasted strings into input fields
          */
         this.pasted = () => {
-            const rawData = document.getElementById("paste").value;
+            const rawData = docById("paste").value;
             let obj = "";
             if (rawData === null || rawData === "") {
                 return;
@@ -7887,7 +7886,7 @@ class Activity {
         };
 
         // end the drag on navbar
-        this.addEventListener(document.getElementById("toolbars"), "mouseover", () => {
+        this.addEventListener(docById("toolbars"), "mouseover", () => {
             this.isDragging = false;
         });
 
@@ -7917,7 +7916,7 @@ class Activity {
                 this.blocks.setSelectionToActivity(false);
                 this.refreshCanvas();
                 // Cache DOM element reference for performance
-                document.getElementById("helpfulWheelDiv").style.display = "none";
+                docById("helpfulWheelDiv").style.display = "none";
             }
         };
 
@@ -7958,7 +7957,7 @@ class Activity {
                 this.blocks.setSelectedBlocks(this.selectedBlocks);
                 this.refreshCanvas();
                 // Cache DOM element reference for performance
-                document.getElementById("helpfulWheelDiv").style.display = "none";
+                docById("helpfulWheelDiv").style.display = "none";
             }
         };
 
@@ -7968,7 +7967,7 @@ class Activity {
             this.isSelecting
                 ? this.textMsg(_("Select is enabled."))
                 : this.textMsg(_("Select is disabled."));
-            document.getElementById("helpfulWheelDiv").style.display = "none";
+            docById("helpfulWheelDiv").style.display = "none";
         };
 
         this._create2Ddrag = () => {
@@ -8158,7 +8157,7 @@ class Activity {
             this._initialized = true;
 
             // Hide stop button on startup
-            const stopBtn = document.getElementById("stop");
+            const stopBtn = docById("stop");
             if (stopBtn) {
                 stopBtn.style.display = "none";
             }
@@ -8171,7 +8170,7 @@ class Activity {
             this._innerHeight = window.innerHeight;
             this._outerWidth = window.outerWidth;
             this._outerHeight = window.outerHeight;
-            const loaderEl = document.getElementById("loader");
+            const loaderEl = docById("loader");
 
             // DOM write: apply class after all geometry reads
             loaderEl.className = "loader";
@@ -8682,7 +8681,7 @@ class Activity {
                 event.dataTransfer.dropEffect = "copy";
             };
 
-            const dropZone = document.getElementById("canvasHolder");
+            const dropZone = docById("canvasHolder");
             dropZone.addEventListener("dragover", __handleDragOver, false);
             dropZone.addEventListener("drop", __handleFileSelect, false);
 
