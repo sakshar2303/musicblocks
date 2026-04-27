@@ -217,7 +217,7 @@ describe("Palettes Class", () => {
                     ]
                 };
             }
-            return { style: {}, appendChild: jest.fn(), removeChild: jest.fn() };
+            return null;
         });
 
         mockActivity = {
