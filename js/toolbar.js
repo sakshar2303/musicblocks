@@ -130,6 +130,7 @@ class Toolbar {
                 ["planetIcon", _("Find and share projects")],
                 ["planetIconDisabled", _("Offline. Sharing is unavailable")],
                 ["toggleAuxBtn", _("Auxiliary menu")],
+                ["musicHintsIcon", _("Music theory hints")],
                 ["helpIcon", _("Help and shortcuts")],
                 ["helpGuideItem", _("Help"), "innerHTML"],
                 ["shortcutsGuideItem", _("Keyboard shortcuts"), "innerHTML"],
@@ -202,6 +203,7 @@ class Toolbar {
                 _("Find and share projects"),
                 _("Offline. Sharing is unavailable"),
                 _("Auxiliary menu"),
+                _("Music theory hints"),
                 _("Help and shortcuts"),
                 _("Help"),
                 _("Keyboard shortcuts"),
@@ -278,6 +280,7 @@ class Toolbar {
                 ["planetIcon", _("Find and share projects")],
                 ["planetIconDisabled", _("Offline. Sharing is unavailable")],
                 ["toggleAuxBtn", _("Auxiliary menu")],
+                ["musicHintsIcon", _("Music theory hints")],
                 ["helpIcon", _("Help and shortcuts")],
                 ["helpGuideItem", _("Help"), "innerHTML"],
                 ["shortcutsGuideItem", _("Keyboard shortcuts"), "innerHTML"],
@@ -344,6 +347,7 @@ class Toolbar {
                 _("Find and share projects"),
                 _("Offline. Sharing is unavailable"),
                 _("Auxiliary menu"),
+                _("Music theory hints"),
                 _("Help and shortcuts"),
                 _("Help"),
                 _("Keyboard shortcuts"),
@@ -1618,6 +1622,20 @@ class Toolbar {
      */
     renderJavaScriptIcon(onclick) {
         docById("toggleJavaScriptIcon").onclick = () => onclick(this.activity);
+    }
+
+    /**
+     * Renders the music hints icon with the provided onclick handler.
+     *
+     * @public
+     * @param {Function} onclick - The onclick handler for the music hints icon.
+     * @returns {void}
+     */
+    renderMusicHintsIcon(onclick) {
+        const icon = docById("musicHintsIcon");
+        if (icon) {
+            icon.onclick = () => onclick(this.activity);
+        }
     }
 
     /**

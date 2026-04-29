@@ -206,7 +206,8 @@ if (_THIS_IS_MUSIC_BLOCKS_) {
         "widgets/oscilloscope",
         "widgets/sampler",
         "widgets/reflection",
-        "widgets/legobricks"
+        "widgets/legobricks",
+        "widgets/musicTheoryHints"
     ];
     MYDEFINES = MYDEFINES.concat(MUSICBLOCKS_EXTRAS);
 }
@@ -522,6 +523,12 @@ class Activity {
             // Late initialization of GIF animator if it was missed in constructor
             if (!this.gifAnimator && typeof GIFAnimator !== "undefined") {
                 this.gifAnimator = new GIFAnimator();
+            }
+
+            // Initialize Music Theory Hints
+            if (typeof MusicTheoryHintsWidget !== "undefined") {
+                this.musicTheoryHints = new MusicTheoryHintsWidget();
+                this.musicTheoryHints.init(this);
             }
         };
 
@@ -8276,6 +8283,7 @@ class Activity {
             if (_THIS_IS_MUSIC_BLOCKS_) {
                 this.toolbar.renderChooseKeyIcon(chooseKeyMenu);
             }
+            this.toolbar.renderMusicHintsIcon(() => this.musicTheoryHints.toggle());
             this.toolbar.renderJavaScriptIcon(toggleJSWindow);
             this.toolbar.renderLanguageSelectIcon(this.languageBox);
             this.toolbar.renderWrapIcon();
