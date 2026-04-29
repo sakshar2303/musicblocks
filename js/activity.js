@@ -207,7 +207,8 @@ if (_THIS_IS_MUSIC_BLOCKS_) {
         "widgets/sampler",
         "widgets/reflection",
         "widgets/legobricks",
-        "widgets/musicTheoryHints"
+        "widgets/musicTheoryHints",
+        "widgets/errorSuggestions"
     ];
     MYDEFINES = MYDEFINES.concat(MUSICBLOCKS_EXTRAS);
 }
@@ -6132,11 +6133,39 @@ class Activity {
                         this.stage.children.length - 1
                     );
                     break;
-                default:
+                default: {
                     // Show and populate errorText div
                     this.errorText.classList.add("show");
-                    this.errorTextContent.textContent = msg;
+
+                    let displayMsg = msg;
+                    const suggestionContainer = docById("errorSuggestionContainer");
+                    if (suggestionContainer) {
+                        suggestionContainer.innerHTML = "";
+                    }
+
+                    if (this.errorSuggestions) {
+                        displayMsg = this.errorSuggestions.getFriendlyMessage(msg, blk, text);
+
+                        if (this.errorSuggestions.hasExample(msg)) {
+                            const btn = document.createElement("button");
+                            btn.className = "error-suggestion-btn";
+                            btn.textContent = _("Show me an example");
+                            btn.onclick = e => {
+                                e.stopPropagation();
+                                this.errorSuggestions.showExample(msg);
+                            };
+                            if (suggestionContainer) {
+                                suggestionContainer.appendChild(btn);
+                            }
+                        }
+                    }
+
+                    this.errorTextContent.textContent = displayMsg;
+
+                    // The arrow already points to the block.
+                    // We could add more visual feedback here if desired.
                     break;
+                }
             }
 
             let myTimeout = _ERRORMSGTIMEOUT_;
@@ -8227,6 +8256,12 @@ class Activity {
             if (typeof MusicTheoryHintsWidget !== "undefined") {
                 this.musicTheoryHints = new MusicTheoryHintsWidget();
                 this.musicTheoryHints.init(this);
+            }
+
+            // Initialize Error Suggestions
+            if (typeof ErrorSuggestionsWidget !== "undefined") {
+                this.errorSuggestions = new ErrorSuggestionsWidget();
+                this.errorSuggestions.init(this);
             }
 
             // Show help on startup if first-time user.
