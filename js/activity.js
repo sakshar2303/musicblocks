@@ -524,12 +524,6 @@ class Activity {
             if (!this.gifAnimator && typeof GIFAnimator !== "undefined") {
                 this.gifAnimator = new GIFAnimator();
             }
-
-            // Initialize Music Theory Hints
-            if (typeof MusicTheoryHintsWidget !== "undefined") {
-                this.musicTheoryHints = new MusicTheoryHintsWidget();
-                this.musicTheoryHints.init(this);
-            }
         };
 
         /*
@@ -8229,6 +8223,12 @@ class Activity {
                 this.themeBox.initializeTheme();
             }
 
+            // Initialize Music Theory Hints
+            if (typeof MusicTheoryHintsWidget !== "undefined") {
+                this.musicTheoryHints = new MusicTheoryHintsWidget();
+                this.musicTheoryHints.init(this);
+            }
+
             // Show help on startup if first-time user.
             if (this.firstTimeUser) {
                 this._showHelp();
@@ -8282,8 +8282,10 @@ class Activity {
             this.toolbar.renderRestoreIcon(restoreTrash);
             if (_THIS_IS_MUSIC_BLOCKS_) {
                 this.toolbar.renderChooseKeyIcon(chooseKeyMenu);
+                if (this.musicTheoryHints) {
+                    this.toolbar.renderMusicHintsIcon(() => this.musicTheoryHints.toggle());
+                }
             }
-            this.toolbar.renderMusicHintsIcon(() => this.musicTheoryHints.toggle());
             this.toolbar.renderJavaScriptIcon(toggleJSWindow);
             this.toolbar.renderLanguageSelectIcon(this.languageBox);
             this.toolbar.renderWrapIcon();
