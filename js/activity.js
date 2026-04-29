@@ -4317,34 +4317,23 @@ class Activity {
                 return;
             }
 
-            const isMaximized =
-                window.innerWidth === window.screen.width &&
-                window.innerHeight === window.screen.height;
-            if (isMaximized) {
-                container.style.width = defaultWidth + "px";
-                container.style.height = defaultHeight + "px";
-                canvas.width = defaultWidth;
-                canvas.height = defaultHeight;
-                overCanvas.width = canvas.width;
-                overCanvas.height = canvas.height;
-                canvasHolder.width = defaultWidth;
-                canvasHolder.height = defaultHeight;
-            } else {
-                const windowWidth = window.innerWidth;
-                const windowHeight = window.innerHeight;
+            const windowWidth = window.innerWidth;
+            const windowHeight = window.innerHeight;
 
-                // Guard against zero or invalid dimensions
-                if (windowWidth <= 0 || windowHeight <= 0) {
-                    return;
-                }
-
-                container.style.width = windowWidth + "px";
-                container.style.height = windowHeight + "px";
-                overCanvas.width = canvas.width;
-                overCanvas.height = canvas.height;
-                canvasHolder.width = canvas.width;
-                canvasHolder.height = canvas.height;
+            // Guard against zero or invalid dimensions
+            if (windowWidth <= 0 || windowHeight <= 0) {
+                return;
             }
+
+            container.style.width = windowWidth + "px";
+            container.style.height = windowHeight + "px";
+            canvas.width = windowWidth;
+            canvas.height = windowHeight;
+            overCanvas.width = windowWidth;
+            overCanvas.height = windowHeight;
+            canvasHolder.width = windowWidth;
+            canvasHolder.height = windowHeight;
+
             docById("hideContents").click();
             that.refreshCanvas();
         }
@@ -6948,15 +6937,15 @@ class Activity {
          */
         this._setupPaletteMenu = () => {
             const btnSize = this.cellSize;
+            let right = 4 * btnSize + 27.5;
+            const bottom = 2.5;
+
             const createButton = (icon, label, action) => {
-                const button = this._makeButton(icon, label, x, y, btnSize, 0);
+                const button = this._makeButton(icon, label, right, bottom);
                 this._loadButtonDragHandler(button, action, this);
-                x += btnSize;
+                right -= btnSize;
                 return button;
             };
-
-            let x = window.innerWidth - 4 * btnSize - 27.5;
-            const y = window.innerHeight - 57.5;
 
             const removeButtonContainer = docById("buttoncontainerBOTTOM");
             if (removeButtonContainer) {
@@ -7619,7 +7608,7 @@ class Activity {
         /*
          * Makes non-toolbar buttons, e.g., the palette menu buttons
          */
-        this._makeButton = (name, label, x, y) => {
+        this._makeButton = (name, label, right, bottom) => {
             const container = document.createElement("div");
             container.setAttribute("id", "" + label);
             container.setAttribute("class", "tooltipped");
@@ -7653,12 +7642,10 @@ class Activity {
             const altText = label ? label.replace(/\s*\[.*\]$/, "") : "Toolbar button";
             img.setAttribute("alt", altText);
 
-            // Batch DOM reads before writes to avoid forced synchronous layout
-            const rightPos = document.body.clientWidth - x;
             container.appendChild(img);
             container.setAttribute(
                 "style",
-                "position: absolute; right:" + rightPos + "px;  top: " + y + "px;"
+                "position: absolute; right:" + right + "px; bottom: " + bottom + "px;"
             );
             docById("buttoncontainerBOTTOM").appendChild(container);
             return container;

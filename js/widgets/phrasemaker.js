@@ -3062,21 +3062,10 @@ class PhraseMaker {
         cell.style.maxWidth = cell.style.width;
         cell.style.height = Math.floor(1.5 * MATRIXSOLFEHEIGHT * this._cellScale) + "px";
         cell.style.textAlign = "center";
-        cell.textContent = "";
         if (noteValueToDisplayAnchorTitle !== null) {
-            const anchor = document.createElement("a");
-            anchor.href = "#";
-            anchor.title = noteValueToDisplayAnchorTitle;
-            anchor.textContent = noteValueToDisplay;
-            cell.appendChild(anchor);
+            cell.innerHTML = `<a href="#" title="${noteValueToDisplayAnchorTitle}">${noteValueToDisplay}</a>`;
         } else {
-            const parts = noteValueToDisplay.split("<br>");
-            for (let k = 0; k < parts.length; k++) {
-                let p = parts[k];
-                if (p === "&mdash;") p = "\u2014";
-                cell.appendChild(document.createTextNode(p));
-                if (k < parts.length - 1) cell.appendChild(document.createElement("br"));
-            }
+            cell.innerHTML = noteValueToDisplay;
         }
         cell.style.backgroundColor = this.platformColor.rhythmcellcolor;
         cell.style.borderLeft = barStyle;
@@ -3185,21 +3174,10 @@ class PhraseMaker {
             cell.style.fontSize = Math.floor(this._cellScale * 75) + "%";
             cell.style.lineHeight = 60 + "%";
             cell.style.textAlign = "center";
-            cell.textContent = "";
             if (noteValueToDisplayAnchorTitle !== null) {
-                const anchor = document.createElement("a");
-                anchor.href = "#";
-                anchor.title = noteValueToDisplayAnchorTitle;
-                anchor.textContent = noteValueToDisplay;
-                cell.appendChild(anchor);
+                cell.innerHTML = `<a href="#" title="${noteValueToDisplayAnchorTitle}">${noteValueToDisplay}</a>`;
             } else {
-                const parts = noteValueToDisplay.split("<br>");
-                for (let k = 0; k < parts.length; k++) {
-                    let p = parts[k];
-                    if (p === "&mdash;") p = "\u2014";
-                    cell.appendChild(document.createTextNode(p));
-                    if (k < parts.length - 1) cell.appendChild(document.createElement("br"));
-                }
+                cell.innerHTML = noteValueToDisplay;
             }
             cell.style.backgroundColor = this.platformColor.rhythmcellcolor;
             cell.style.color = this.platformColor.textColor;
