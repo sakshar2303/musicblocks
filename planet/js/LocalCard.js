@@ -191,3 +191,7 @@ class LocalCard {
         this.ProjectData = Planet.LocalPlanet.ProjectTable[this.id];
     }
 }
+
+if (typeof module !== "undefined" && module.exports) {
+    module.exports = { LocalCard };
+}
